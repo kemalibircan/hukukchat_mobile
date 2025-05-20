@@ -24,7 +24,6 @@ const { width } = Dimensions.get('window');
 const MenuScreen = () => {
   const navigation = useNavigation();
   const selectUserToken = useSelector(selectSignIn);
-  const icon_id = useSelector(selectIconId);
   const counter = useSelector(selectCounter);
   const dispatch = useDispatch();
   

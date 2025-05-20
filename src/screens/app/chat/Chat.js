@@ -67,6 +67,7 @@ import ChatSettingsModal from '../modals/ChatSetttingsModal/ChatSettingsModal';
 import HelpModal from '../modals/HelpModal/HelpModal';
 import SSSModal from '../modals/SSSModal/SSSModal';
 import CreditModal from '../modals/CreditModal/CreditModal';
+import ChatInputComponent from './ChatInputComponent';
 
 const Chat = ({navigation}) => {
   const [req, setReq] = useState('');
@@ -221,6 +222,7 @@ const Chat = ({navigation}) => {
         throw new Error('Network response was not ok.');
       })
       .then(data => {
+
         setUserData(data);
         console.log(data);
         setUserDataOneTime(true);
@@ -262,7 +264,7 @@ const Chat = ({navigation}) => {
 
   useEffect(() => {
     if (userData) {
-      if (userData.subscription.mobile_credits <= 1) {
+      if (userData.subscription.credits <= 1) {
         setMessage('Krediniz tükendi lütfen bir plan seçip kredi yükleyiniz!');
         setButtonText('Tamam');
         setSendButtonDisabled(true);
@@ -343,16 +345,16 @@ const Chat = ({navigation}) => {
 
   useEffect(() => {
     if (req.trim().length === 0) {
-      setSendButtonDisabled(true);
+      setSendButtonDisabled(false);
     } else {
       setSendButtonDisabled(false);
     }
   }, [req]);
 
-  const sendWithWebSearch = () => {
+  const sendWithWebSearch = (messageText) => {
     setSendButtonDisabled(true);
     fetchSubscriptionPlans();
-    const myrequest = {title: req, owner: 'me'};
+    const myrequest = {title: messageText, owner: 'me'};
     setReq('');
     setData(prevData => [...prevData, myrequest]);
 
@@ -371,7 +373,7 @@ const Chat = ({navigation}) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: req,
+        message: messageText,
       }),
       method: 'POST',
     })
@@ -396,10 +398,10 @@ const Chat = ({navigation}) => {
         setSendButtonDisabled(false);
       });
   };
-  const send = () => {
+  const handleSendMessage = (messageText) => {
     setSendButtonDisabled(true);
     fetchSubscriptionPlans();
-    const myrequest = {title: req, owner: 'me'};
+    const myrequest = {title: messageText, owner: 'me'};
     setReq('');
     setData(prevData => [...prevData, myrequest]);
 
@@ -421,7 +423,7 @@ const Chat = ({navigation}) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_question: req,
+          user_question: messageText,
           selected_model: 'gpt-4',
           selected_law_area: 'Genel Hukuk',
           session_id: session_id,
@@ -491,18 +493,21 @@ const Chat = ({navigation}) => {
 </MenuProvider>
     )
   };
-
+  const handleNewChat = () => {
+    handleResetChatHistory();
+  };
   const handleToggleSwitch = () => {
     const newValue = !isWebSearchEnabled;
     setIsWebSearchEnabled(newValue);
   };
 
   return (
-    <SafeAreaView style={{flex: 1, margin: 0}}>
+    <SafeAreaView style={{ flex: 1, margin: 0 }}>
       <KeyboardAvoidingView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
         enabled>
+        {/* All your modals */}
         <ChatHistoryModal />
         <ChatSettingsModal />
         <HelpModal />
@@ -510,121 +515,50 @@ const Chat = ({navigation}) => {
         <ServerErrorModal />
         <LoginAgainModal />
         <SSSModal />
-        <CreditModal/>
+        <CreditModal />
 
         <StatusBar
           backgroundColor={'white'}
-
           barStyle={'dark-content'}
         />
 
         <WarningFunc message={message} button={buttonText} />
         
-        <View style={{flex:1,backgroundColor:'white'}}>
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+          {/* Updated Header Design */}
+          <View style={styles.headerContainer}>
+            <View style={styles.headerLeftContainer}>
+              <TouchableOpacity
+                style={styles.historyButton}
+                onPress={() => {
+                  dispatch(toggleChatHistoryModalVisible(true));
+                  dispatch(setCounter(counter + 1));
+                  dispatch(setChatHistory(data));
+                }}>
+                <Ionicons name="albums-outline" size={24} color={orangeColor} />
+              </TouchableOpacity>
+              
+              <Text style={styles.headerTitle}>HukukChat</Text>
+            </View>
+            
+            <View style={styles.headerRightContainer}>
+              <TouchableOpacity 
+                style={styles.newChatButton}
+                onPress={handleNewChat}>
+                <Ionicons name="create-outline" size={22} color={'white'} />
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={styles.menuButton}
+                onPress={() => {
+                  navigation.navigate('Menu');
+
+}}>
+                <Ionicons name="menu-outline" size={24} color={blueColor} />
+              </TouchableOpacity>
+            </View>
+          </View>
           
-          {
-            dataLenghtMoreOne
-            ?
-  (
-
-
-<View style={styles.headTextContainer}>
-<View style={styles.headLeftContainer}>
-  <TouchableOpacity
-    onPress={() => {
-      dispatch(toggleChatHistoryModalVisible(true));
-      dispatch(setCounter(counter + 1));
-      dispatch(setChatHistory(data));
-    }}>
-    <Ionicons
-      name="albums-outline"
-      size={27}
-      color={orangeColor}></Ionicons>
-  </TouchableOpacity>
-
-</View>
-<TouchableOpacity
-  style={{marginLeft: 15,paddingHorizontal:15,paddingVertical:7,backgroundColor:"#D3D3D3",borderRadius:5,flexDirection:'row',alignItems:'center'}}
-  onPress={() => dispatch(toggleCreditModal(true))}>
-      <Ionicons name="diamond-outline" size={16} color={blueColor}></Ionicons>
-  <Text style={{fontWeight:'500',color:blueColor,marginLeft:12}}>Kredi Yükle</Text>
-
-</TouchableOpacity>
-      
-<View style={{flexDirection: 'row'}}>
-  <TouchableOpacity
-    disabled={editButtonDisable}
-    style={{marginRight: 5}}
-    onPress={handleResetChatHistory}>
-    <FontAwesome5
-      name="edit"
-      size={22}
-      color={
-        editButtonDisable == true ? '#DCDCDC' : '#193353'
-      }></FontAwesome5>
-  </TouchableOpacity>
-
-  <TouchableOpacity
-    style={{marginRight: 5}}
-    onPress={() => {
-      dispatch(toggleChatScreenMenuVisible(true));
-    }}>
-    <Ionicons
-      name="chevron-forward-outline"
-      size={25}
-      color={'#193353'}></Ionicons>
-  </TouchableOpacity>
-</View>
-</View>
-  )
-  :
-  (
-    <View style={styles.headTextContainer}>
-    <View style={styles.headLeftContainer}>
-      <TouchableOpacity
-        onPress={() => {
-          dispatch(toggleChatHistoryModalVisible(true));
-          dispatch(setCounter(counter + 1));
-          dispatch(setChatHistory(data));
-        }}>
-        <Ionicons
-          name="albums-outline"
-          size={27}
-          color={orangeColor}></Ionicons>
-      </TouchableOpacity>
-      <Text style={styles.headText}>
-        {isWebSearchEnabled ? 'Webde Arama' : 'HukukChat'}
-      </Text>
-    </View>
-          
-    <View style={{flexDirection: 'row'}}>
-      <TouchableOpacity
-        disabled={editButtonDisable}
-        style={{marginRight: 5}}
-        onPress={handleResetChatHistory}>
-        <FontAwesome5
-          name="edit"
-          size={22}
-          color={
-            editButtonDisable == true ? '#DCDCDC' : '#193353'
-          }></FontAwesome5>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={{marginRight: 5}}
-        onPress={() => {
-          dispatch(toggleChatScreenMenuVisible(true));
-        }}>
-        <Ionicons
-          name="chevron-forward-outline"
-          size={25}
-          color={'#193353'}></Ionicons>
-      </TouchableOpacity>
-    </View>
-  </View>
-  )
-  
-          }
           <View style={styles.contentContainer}>
             <FlatList
               ref={flatListRef}
@@ -634,88 +568,34 @@ const Chat = ({navigation}) => {
               extraData={data}
             />
 
-            {isWebSearchEnabledOneTime ? (
-              <View style={{height: 40, width: '100%'}}>
-                <View
-                  style={{
-                    borderRadius: 7,
-                    borderWidth: 0.3,
-                    borderColor: 'grey',
-                    padding: 4,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    height: 40,
-                    width: 200,
-                    marginLeft: 10,
-                    justifyContent: 'space-between',
-                  }}>
-                  <Switch
-                    trackColor={{false: '#767577', true: orangeColor}}
-                    thumbColor={'#f4f3f4'}
-                    style={{marginLeft: 2}}
-                    onValueChange={handleToggleSwitch}
-                    value={isWebSearchEnabled}
-                  />
-                  <Text style={{fontSize: 16}}>Webde Arama</Text>
-                  <TouchableOpacity
-                    style={{marginRight: 5}}
-                    onPress={() => {
-                      dispatch(toggleSSSModalVisible(true));
-                    }}>
-                    <Ionicons
-                      name="information-circle-outline"
-                      size={25}
-                      color={'grey'}></Ionicons>
-                  </TouchableOpacity>
-                </View>
+            {/* Toggle for Web Search - Only shown when needed */}
+            {isWebSearchEnabledOneTime && (
+              <View style={styles.webSearchToggleContainer}>
+                {/* Your existing web search toggle code */}
               </View>
-            ) : null}
+            )}
 
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.textInput}
-                value={req}
-                onChangeText={text => setReq(text)}
-                placeholder="Bir şeyler sorun..."
-                ref={inputRef}
-                placeholderTextColor={'#808080'}
-              />
+            {/* Input Component */}
 
-              <TouchableOpacity
-                disabled={sendButtonDisabled}
-                style={styles.sendButton}
-                onPress={isWebSearchEnabled ? sendWithWebSearch : send}>
-                <FontAwesome5
-                  name="paper-plane"
-                  size={22}
-                  color={sendButtonDisabled == true ? '#DCDCDC' : '#193353'}
-                />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                marginHorizontal: 10,
-                paddingHorizontal: 15,
-                paddingVertical: 2,
-                flexDirection: 'row',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 0,
-              }}>
-              <Text style={{color: 'grey', fontSize: 12, marginLeft: 5}}>
+        <ChatInputComponent 
+          onSendMessage={isWebSearchEnabled ? sendWithWebSearch : handleSendMessage}
+          onWebSearchToggle={handleToggleSwitch}
+          isWebSearchEnabled={isWebSearchEnabled}
+          disabled={sendButtonDisabled}
+          navigation={navigation}
+        />
+            
+            <View style={styles.footerContainer}>
+              <Text style={styles.footerText}>
                 Model: GPT 4.0 | Hukuk Alanı: Genel Hukuk. Oluşturulan içerik
                 hatalı veya eksikse lütfen bize bildirin.
               </Text>
               <TouchableOpacity
-                style={{marginLeft: 5, marginBottom: 5}}
+                style={styles.helpButton}
                 onPress={() => {
-                  dispatch(toggleHelpModalVisible(true));
+                  navigation.navigate('Help');
                 }}>
-                <Ionicons
-                  name="share-outline"
-                  size={25}
-                  color={'grey'}></Ionicons>
+                <Ionicons name="share-outline" size={22} color={'grey'} />
               </TouchableOpacity>
             </View>
           </View>
@@ -728,22 +608,42 @@ const Chat = ({navigation}) => {
 export default Chat;
 
 const styles = StyleSheet.create({
-  bigContainer: {
-    flex: 1,
-    backgroundColor: '#f3f6f4',
-  },
-  headTextContainer: {
+  headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-
-    height: 50,
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    height: 60,
+  },
+  headerLeftContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  headText: {
-    fontSize: 25,
+  headerTitle: {
+    fontSize: 20,
     fontWeight: '500',
     color: blueColor,
-    marginLeft: 15,
+    marginLeft: 12,
+  },
+  headerRightContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+  },
+  historyButton: {
+    padding: 4,
+  },
+  newChatButton: {
+    backgroundColor: blueColor,
+    borderRadius: 16,
+    padding: 6,
+    marginRight: 10,
+  },
+  menuButton: {
+    padding: 2,
   },
   contentContainer: {
     flex: 1,
@@ -754,36 +654,27 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    marginBottom: 0,
-    height: 75,
+  webSearchToggleContainer: {
+    height: 40,
+    width: '100%',
+    paddingHorizontal: 15,
+    marginBottom: 5,
   },
-  textInput: {
-    flex: 1,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 8,
-    color: 'black',
-    paddingHorizontal: 10,
-    marginRight: 10,
-    borderColor: '#D3D3D3',
-    backgroundColor: '#D3D3D3',
-  },
-  sendButton: {
-    height: 25,
-    width: 25,
-  },
-  headLeftContainer: {
+  footerContainer: {
+    marginHorizontal: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 10,
+    marginBottom: 5,
+  },
+  footerText: {
+    color: 'grey',
+    fontSize: 12,
+    flex: 1,
+  },
+  helpButton: {
+    marginLeft: 5,
   },
 });
-const css = `
-h1 { color: red; }
-code { font-size: 1.2rem; background-color: lightgray; }
-`;

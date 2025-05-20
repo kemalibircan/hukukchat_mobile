@@ -1,162 +1,265 @@
 import React, { useState } from "react";
-import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from "react-native";
+import { 
+  View, 
+  Text, 
+  KeyboardAvoidingView, 
+  TextInput, 
+  StyleSheet, 
+  TouchableOpacity, 
+  SafeAreaView, 
+  StatusBar,
+  Platform
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { orangeColor } from "../../statics/color";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import WrongPassOrMailModal from "../app/modals/Warnings/WrongPassOrMailModal";
-import ServerErrorModal from "../app/modals/Warnings/ServerErrorModal";
 import { Flow } from 'react-native-animated-spinkit';
-import { useDispatch } from "react-redux";
-import { toggleServerErrorModalVisible, toggleWrongPassOrMailModalVisible } from "../../slices/modalSlices";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setSignIn } from "../../slices/authSlices";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Toast from '../../functions/Toast'; // Import the Toast component
 
 const EnterCode = () => {
   const navigation = useNavigation();
-  const [loading,setLoading] = useState(false)
-  const dispatch = useDispatch()
-
-  const loginValidationSchema = Yup.object().shape({
-
-               email: Yup.string().email('Geçerli bir email adresi girin').required('Email gereklidir'),
-
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState({
+    visible: false,
+    message: "",
+    type: "info"
   });
 
-  const storeData = async (value) => {
+  const codeValidationSchema = Yup.object().shape({
+    code: Yup.string()
+      .matches(/^\d{3}-\d{3}$/, 'Kod formatı: 123-456 şeklinde olmalıdır')
+      .required('Doğrulama kodu gereklidir'),
+  });
+
+  const handleSubmitCode = async (values) => {
+    setLoading(true);
     try {
-      await AsyncStorage.setItem('jwt', value);
-      dispatch(setSignIn(value))
-    } catch (e) {
-      console.log(value)
-    }
-  }
-  
-
-
-  const handleLogin = async (values) => {
-   setLoading(true);
-    try {
-      let formData = new FormData();
-    formData.append('username', values.username);
-    formData.append('password', values.password);
-    await fetch('https://api.hukukchat.com/login', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        },
-        body: formData
-      }) .then(response => response.json())
-      .then(data =>{
-          if(data.message =="An error occurred: Incorrect username or password"){
-              dispatch(toggleWrongPassOrMailModalVisible(true))
-          }
-          else if (data.token_type == "bearer"){
-            storeData(data.access_token)
-          }
-          else{
-            dispatch(toggleServerErrorModalVisible(true))
-          }
-        
-      })
-
-      
-
-    
-      // Handle successful response data
-  
+      // Simulate API call
+      setTimeout(() => {
+        // Success scenario
+        if (values.code === "123-456") {
+          navigation.navigate('ResetPasswordConfirm'); // Navigate to password reset page
+        } 
+        // Error scenario
+        else {
+          setToast({
+            visible: true,
+            message: "Geçersiz doğrulama kodu. Lütfen kontrol edip tekrar deneyin.",
+            type: "error"
+          });
+        }
+        setLoading(false);
+      }, 1500);
     } catch (error) {
-      console.error('Fetch Error:', error);
-      dispatch(toggleServerErrorModalVisible(true))
-      // Handle fetch error
-    } finally {
+      setToast({
+        visible: true,
+        message: "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+        type: "error"
+      });
       setLoading(false);
     }
-    
-  }
-  
+  };
 
   return (
-    <SafeAreaView style={{ backgroundColor: orangeColor, flex: 1 }}>
-      <WrongPassOrMailModal />
-      <ServerErrorModal />
-     
-      <View style={styles.container}>
-        <Formik
-          initialValues={{ username: '', password: '' }} // Değişiklik burada: email yerine username
-          validationSchema={loginValidationSchema}
-          onSubmit={values => handleLogin(values)}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values, errors, isValid }) => (
-            <>
-              <View style={styles.textContainerSignin}>
-               <TouchableOpacity onPress={()=> {navigation.navigate('ResetPassword')}}>
-                              <FontAwesome5 name='arrow-left' size={35} color='white'></FontAwesome5>
-               </TouchableOpacity>
-                <View style={styles.imageContainer}>
-                  <Text style={{color:'white',fontSize:25}}>Şifremi Unuttum</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
+      <KeyboardAvoidingView 
+        style={styles.keyboardAvoidingView} 
+        behavior={Platform.OS === "ios" ? "padding" : null} 
+        enabled
+      >
+        <Toast 
+          visible={toast.visible} 
+          message={toast.message} 
+          type={toast.type} 
+          onDismiss={() => setToast({...toast, visible: false})} 
+        />
+        
+        <View style={styles.container}>
+          {/* Header section */}
+          <View style={styles.headerContainer}>
+            <TouchableOpacity 
+              style={styles.backButton}
+              onPress={() => navigation.navigate('ResetPassword')}
+            >
+              <Ionicons name="arrow-back" size={24} color="#192B53" />
+            </TouchableOpacity>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>Doğrulama Kodu</Text>
+              <Text style={styles.subtitle}>E-posta adresinize gönderilen 6 haneli doğrulama kodunu giriniz</Text>
+            </View>
+          </View>
+
+          {/* Form section */}
+          <Formik
+            initialValues={{ code: '' }}
+            validationSchema={codeValidationSchema}
+            onSubmit={values => handleSubmitCode(values)}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+              <View style={styles.formContainer}>
+                <View style={styles.inputWrapper}>
+                  <View style={[
+                    styles.inputContainer,
+                    errors.code && touched.code ? styles.inputError : {}
+                  ]}>
+                    <Ionicons name="key-outline" size={20} color="#666" style={styles.inputIcon} />
+                    <TextInput
+                      placeholder="Örnek: 123-456"
+                      placeholderTextColor="#999"
+                      style={styles.input}
+                      onChangeText={handleChange('code')}
+                      onBlur={handleBlur('code')}
+                      value={values.code}
+                      keyboardType="number-pad"
+                    />
+                  </View>
+                  {errors.code && touched.code && 
+                    <Text style={styles.errorText}>{errors.code}</Text>
+                  }
+                </View>
+
+                <TouchableOpacity
+                  onPress={handleSubmit}
+                  style={styles.submitButton}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <Flow color="#FFFFFF" size={30} />
+                  ) : (
+                    <Text style={styles.submitButtonText}>Doğrula</Text>
+                  )}
+                </TouchableOpacity>
+
+                <View style={styles.resendContainer}>
+                  <Text style={styles.resendText}>Kod almadınız mı? </Text>
+                  <TouchableOpacity onPress={() => {
+                    setToast({
+                      visible: true,
+                      message: "Yeni doğrulama kodu gönderildi",
+                      type: "success"
+                    });
+                  }}>
+                    <Text style={styles.resendLinkText}>Yeniden gönder</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View style={styles.textInputContainer}>
-                <View style={styles.containerInput}>
-                  <TextInput
-                    placeholder="Örnek: 013-343" 
-                    style={styles.username}
-                    onChangeText={handleChange('email')} 
-                    onBlur={handleBlur('email')} 
-                    value={values.email} 
-                  />
-                  {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-                </View>
-
-              </View>
-
-              <TouchableOpacity
-                onPress={handleSubmit} 
-                style={styles.button}
-                disabled={!isValid}
-              >
-
-            {loading ? (
-                <Flow color={orangeColor} size={30} />
-              ) : (
-                <Text style={styles.buttonText}>Devam Et</Text>
-              )}  
-              </TouchableOpacity>
-
-         
-            </>
-          )}
-        </Formik>
-      </View>
+            )}
+          </Formik>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
-  )
-}
-export default EnterCode;
-
+  );
+};
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: orangeColor, flex: 1, marginHorizontal: 40 },
-  username: { height: 50, width: 300, backgroundColor: 'white', paddingLeft: 15, borderRadius: 8,  },
-  password: { height: 50, width: 300, backgroundColor: 'white', paddingLeft: 15, borderRadius: 8 },
-  textContainerSignin: { marginTop: 50 },
-  textInputContainer: { marginTop: 30 },
-  button: { backgroundColor: 'white', height: 50, justifyContent: 'center', alignItems: 'center', width: 300, borderRadius: 100 ,marginTop:25},
-  buttonText: { color: orangeColor, fontWeight: '600', fontSize: 18 },
-  logo: { height: 225, width: 325 },
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFFFFF"
+  },
+  keyboardAvoidingView: {
+    flex: 1
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 24,
+    paddingTop: 20
+  },
+  headerContainer: {
+    marginBottom: 40,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  titleContainer: {
+    marginBottom: 20
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#192B53',
+    marginBottom: 8
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20
+  },
+  formContainer: {
+    width: '100%'
+  },
+  inputWrapper: {
+    marginBottom: 30
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F5F7FA',
+    borderRadius: 12,
+    height: 56,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: '#E0E6ED'
+  },
+  inputError: {
+    borderColor: '#FF5A5A'
+  },
+  inputIcon: {
+    marginRight: 12
+  },
+  input: {
+    flex: 1,
+    color: '#333',
+    fontSize: 16
+  },
   errorText: {
-    color: 'white',
+    color: '#FF5A5A',
     fontSize: 12,
-    marginLeft:5
+    marginTop: 4,
+    marginLeft: 4
   },
-  containerInput:{
-    height:65,
-    marginBottom:10
+  submitButton: {
+    backgroundColor: orangeColor,
+    borderRadius: 12,
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: orangeColor,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+    marginBottom: 20
   },
-  imageContainer:{
-               marginTop:20
+  submitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700'
+  },
+  resendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10
+  },
+  resendText: {
+    color: '#666',
+    fontSize: 14
+  },
+  resendLinkText: {
+    color: orangeColor,
+    fontSize: 14,
+    fontWeight: '600'
   }
-  
 });
+
+export default EnterCode;

@@ -1,6 +1,5 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Wave } from 'react-native-animated-spinkit';
+import React, { useEffect, useRef } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from "react-native";
 import Markdown from 'react-native-markdown-display';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -8,150 +7,213 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { blueColor, orangeColor } from "../../../statics/color";
 
-const ChatItem = ({ item, index }) => {
-    const [isMenuVisible, setIsMenuVisible] = React.useState(false);
-
-    const handleCopyText = (text) => {
-        Clipboard.setString(text);
-        setIsMenuVisible(false);
+const LoadingAnimation = () => {
+  const animations = [...Array(3)].map(() => useRef(new Animated.Value(0)).current);
+  
+  useEffect(() => {
+    const animate = (index) => {
+      Animated.sequence([
+        Animated.timing(animations[index], {
+          toValue: 1,
+          duration: 400,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animations[index], {
+          toValue: 0,
+          duration: 400,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        })
+      ]).start(() => {
+        animate(index);
+      });
     };
 
-    const gosterme = (str) => {
-        if (str.length <= 4) {
-            return ""; // Dize 4 karakterden kısa ise hiçbir şey döndür
-        } else {
-            return str.slice(0, -4); // Dizenin son 4 karakterini kes ve geri kalanını döndür
-        }
-    };
+    animations.forEach((_, index) => {
+      setTimeout(() => animate(index), index * 150);
+    });
+    
+    return () => animations.forEach(anim => anim.stopAnimation());
+  }, []);
 
-    if (item.title.slice(-4) === "null") {
-        return (
-            <View style={item.owner == "Ai" ? styles.ai : styles.user}>
-                <View style={styles.container}>
-                    {item.owner == "Ai" ? (
-                        <Image
-                            style={styles.imageai}
-                            tintColor={"#D77A25"}
-                            source={require(`../../../icons/1.png`)}
-                        />
-                    ) : (
-                        <Image
-                            style={styles.imageai}
-                            source={require(`../../../icons/0.png`)}
-                        />
-                    )}
-                    <Text style={item.owner == "Ai" ? styles.aiText : styles.userText}>
-                        {gosterme(item.title)}
-                    </Text>
-                </View>
-            </View>
-        );
-    } else if (item.title === "loading") {
-        return (
-            <View style={item.owner == "Ai" ? styles.ai : styles.user}>
-                <View style={styles.container}>
-                    {item.owner == "Ai" ? (
-                        <Image
-                            style={styles.imageai}
-                            tintColor={"#D77A25"}
-                            source={require(`../../../icons/1.png`)}
-                        />
-                    ) : (
-                        <Image
-                            style={styles.imageai}
-                            source={require(`../../../icons/0.png`)}
-                        />
-                    )}
-                    <Wave size={25} color={orangeColor} />
-                </View>
-            </View>
-        );
+  return (
+    <View style={styles.loadingContainer}>
+      {animations.map((anim, index) => (
+        <Animated.View 
+          key={index}
+          style={[
+            styles.dot, 
+            {
+              transform: [{ 
+                translateY: anim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, -8]
+                }) 
+              }]
+            }
+          ]}
+        />
+      ))}
+    </View>
+  );
+};
+
+const ChatItem = ({ item }) => {
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+
+  const handleCopyText = (text) => {
+    Clipboard.setString(text);
+    setIsMenuVisible(false);
+  };
+
+  const gosterme = (str) => {
+    if (str.length <= 4) {
+      return "";
     } else {
-        return (
-            <View style={item.owner == "Ai" ? styles.ai : styles.user}>
-                <View style={styles.container}>
-                    {item.owner == "Ai" ? (
-                        <Image
-                            style={styles.imageai}
-                            tintColor={"#D77A25"}
-                            source={require(`../../../icons/1.png`)}
-                        />
-                    ) : (
-                        <Image
-                            style={styles.imageai}
-                            source={require(`../../../icons/0.png`)}
-                        />
-                    )}
-                    <TouchableOpacity
-                        style={styles.textContainer}
-                        onLongPress={() => setIsMenuVisible(true)}
-                    >
-                        <Markdown style={item.owner == "Ai" ? styles.aiText : styles.userText}>
-                            {item.title}
-                        </Markdown>
-                        {isMenuVisible && (
-                            <Menu 
-                            opened={true} onBackdropPress={() => setIsMenuVisible(false)}>
-                                <MenuTrigger />
-                                <MenuOptions
-                                                             style={{padding:5,justifyContent:'center',alignItems:'center',display:'flex',borderRadius:8}}
-                                                             >
-                                         <MenuOption  onSelect={() => handleCopyText(item.title)}>
-                                            <View style={{flexDirection:'row',alignItems:'center'}}>
-
-                                            <Ionicons name="clipboard-outline" size={16} color={orangeColor}></Ionicons>
-                                             <Text style={{marginLeft:5,fontSize:16,fontWeight:'500',color:blueColor}}>Kopyala</Text>
-                                            </View>
-                                        </MenuOption>
-                                </MenuOptions>
-                            </Menu>
-                        )}
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
+      return str.slice(0, -4);
     }
-}
+  };
+
+  // Check if owner is "Ai" (case sensitive)
+  const isAi = item.owner === "Ai";
+  
+  console.log("Message owner:", item.owner, "isAi:", isAi); // Add this for debugging
+
+  if (item.title.slice(-4) === "null") {
+    return (
+      <View style={[styles.messageWrapper, isAi ? styles.aiWrapper : styles.userWrapper]}>
+        <View style={[styles.messageBubble, isAi ? styles.aiBubble : styles.userBubble]}>
+          <Text style={isAi ? styles.aiText : styles.userText}>
+            {gosterme(item.title)}
+          </Text>
+        </View>
+      </View>
+    );
+  } else if (item.title === "loading") {
+    return (
+      <View style={[styles.messageWrapper, styles.aiWrapper]}>
+        <View style={[styles.messageBubble, styles.aiBubble, styles.loadingBubble]}>
+          <LoadingAnimation />
+        </View>
+      </View>
+    );
+  } else {
+    return (
+      <View style={[styles.messageWrapper, isAi ? styles.aiWrapper : styles.userWrapper]}>
+        <TouchableOpacity
+          style={[styles.messageBubble, isAi ? styles.aiBubble : styles.userBubble]}
+          onLongPress={() => setIsMenuVisible(true)}
+          activeOpacity={0.8}
+        >
+          <Markdown style={styles.markdownStyle}>
+            {item.title}
+          </Markdown>
+          {isMenuVisible && (
+            <Menu opened={true} onBackdropPress={() => setIsMenuVisible(false)}>
+              <MenuTrigger />
+              <MenuOptions style={styles.menuOptions}>
+                <MenuOption onSelect={() => handleCopyText(item.title)}>
+                  <View style={styles.menuOptionItem}>
+                    <Ionicons name="clipboard-outline" size={18} color={orangeColor} />
+                    <Text style={styles.menuOptionText}>Kopyala</Text>
+                  </View>
+                </MenuOption>
+              </MenuOptions>
+            </Menu>
+          )}
+        </TouchableOpacity>
+      </View>
+    );
+  }
+};
 
 export default ChatItem;
 
 const styles = StyleSheet.create({
-    ai: {
-        backgroundColor: 'white'
+  messageWrapper: {
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    width: '100%',
+    backgroundColor: 'white',
+  },
+  aiWrapper: {
+    alignItems: 'flex-start',
+  },
+  userWrapper: {
+    alignItems: 'flex-end',
+  },
+  messageBubble: {
+    borderRadius: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    maxWidth: '100%',
+    minWidth: 60,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+  },
+  aiBubble: {
+    backgroundColor: '#F0F2F5',
+    borderTopLeftRadius: 4,
+  },
+  userBubble: {
+    backgroundColor: '#E3F2FD',
+    borderTopRightRadius: 4,
+  },
+  loadingBubble: {
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    minWidth: 80,
+  },
+  aiText: {
+    color: blueColor,
+    fontWeight: '400',
+    fontSize: 15,
+  },
+  userText: {
+    color: orangeColor,
+    fontWeight: '400',
+    fontSize: 15,
+  },
+  markdownStyle: {
+    body: {
+      color: 'black',
+      fontWeight: '400',
+      fontSize: 15,
     },
-    user: {
-        backgroundColor: "#E5E4E2"
-    },
-    aiText: {
-        marginRight: 75,
-        color: blueColor,
-        fontWeight: '400'
-    },
-    userText: {
-        marginRight: 75,
-        color: orangeColor,
-        fontWeight: '400'
-    },
-    container: {
-        minHeight: 75,
-        
-        marginTop: 2,
-        justifyContent: 'flex-start',
-        paddingTop: 10,
-        paddingBottom: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingRight: 25
-    },
-    imageai: {
-        height: 25,
-        width: 25,
-        marginRight: 15,
-        marginLeft: 20
-    },
-    textContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-    }
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 20,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: blueColor,
+    marginHorizontal: 3,
+  },
+  menuOptions: {
+    padding: 8,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    elevation: 3,
+  },
+  menuOptionItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  menuOptionText: {
+    marginLeft: 8,
+    fontSize: 16,
+    fontWeight: '500',
+    color: blueColor,
+  },
 });
