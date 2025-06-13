@@ -11,10 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		3EC50EAD9F5DB52AE529E4ED /* libPods-HukukChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA6D2F657DADFC3F1DF4EF8B /* libPods-HukukChat.a */; };
 		41D97DA5A0EDDA6D687E031E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 808A9BCE15C799B0A63017D6 /* PrivacyInfo.xcprivacy */; };
+		634170D4DD707EDDC6F50E54 /* libPods-HukukChat-HukukChatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C78E0302CD535E0AC6A0EB74 /* libPods-HukukChat-HukukChatTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D166889F0F580F77C7259102 /* libPods-HukukChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD95894AC98BCD487B337030 /* libPods-HukukChat.a */; };
-		E6BF3CD622679441315CFBC2 /* libPods-HukukChat-HukukChatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B095C118295B128D2918AF3 /* libPods-HukukChat-HukukChatTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,15 +37,15 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HukukChat/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HukukChat/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HukukChat/main.m; sourceTree = "<group>"; };
-		3B095C118295B128D2918AF3 /* libPods-HukukChat-HukukChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HukukChat-HukukChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A2A0E24FA7F89A720612718 /* Pods-HukukChat-HukukChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat-HukukChatTests.debug.xcconfig"; path = "Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7BC86DC866098B22E4832B35 /* Pods-HukukChat-HukukChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat-HukukChatTests.release.xcconfig"; path = "Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		808A9BCE15C799B0A63017D6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = HukukChat/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HukukChat/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9B714E07B4D2ABF081AB57BA /* Pods-HukukChat-HukukChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat-HukukChatTests.debug.xcconfig"; path = "Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests.debug.xcconfig"; sourceTree = "<group>"; };
-		CD95894AC98BCD487B337030 /* libPods-HukukChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HukukChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEC7C73B7E73A5F433597293 /* Pods-HukukChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat.debug.xcconfig"; path = "Target Support Files/Pods-HukukChat/Pods-HukukChat.debug.xcconfig"; sourceTree = "<group>"; };
-		DC4B5A5F1D3790669FEF9DDE /* Pods-HukukChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat.release.xcconfig"; path = "Target Support Files/Pods-HukukChat/Pods-HukukChat.release.xcconfig"; sourceTree = "<group>"; };
+		B5F78C1E9EE1DE520172EF19 /* Pods-HukukChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat.release.xcconfig"; path = "Target Support Files/Pods-HukukChat/Pods-HukukChat.release.xcconfig"; sourceTree = "<group>"; };
+		C78E0302CD535E0AC6A0EB74 /* libPods-HukukChat-HukukChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HukukChat-HukukChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE8A38E1E447307A84ED7D59 /* Pods-HukukChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat.debug.xcconfig"; path = "Target Support Files/Pods-HukukChat/Pods-HukukChat.debug.xcconfig"; sourceTree = "<group>"; };
+		EA6D2F657DADFC3F1DF4EF8B /* libPods-HukukChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HukukChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FC385130D6FEAB72E327A55E /* Pods-HukukChat-HukukChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HukukChat-HukukChatTests.release.xcconfig"; path = "Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6BF3CD622679441315CFBC2 /* libPods-HukukChat-HukukChatTests.a in Frameworks */,
+				634170D4DD707EDDC6F50E54 /* libPods-HukukChat-HukukChatTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D166889F0F580F77C7259102 /* libPods-HukukChat.a in Frameworks */,
+				3EC50EAD9F5DB52AE529E4ED /* libPods-HukukChat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,8 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				CD95894AC98BCD487B337030 /* libPods-HukukChat.a */,
-				3B095C118295B128D2918AF3 /* libPods-HukukChat-HukukChatTests.a */,
+				EA6D2F657DADFC3F1DF4EF8B /* libPods-HukukChat.a */,
+				C78E0302CD535E0AC6A0EB74 /* libPods-HukukChat-HukukChatTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,10 +143,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CEC7C73B7E73A5F433597293 /* Pods-HukukChat.debug.xcconfig */,
-				DC4B5A5F1D3790669FEF9DDE /* Pods-HukukChat.release.xcconfig */,
-				9B714E07B4D2ABF081AB57BA /* Pods-HukukChat-HukukChatTests.debug.xcconfig */,
-				FC385130D6FEAB72E327A55E /* Pods-HukukChat-HukukChatTests.release.xcconfig */,
+				CE8A38E1E447307A84ED7D59 /* Pods-HukukChat.debug.xcconfig */,
+				B5F78C1E9EE1DE520172EF19 /* Pods-HukukChat.release.xcconfig */,
+				4A2A0E24FA7F89A720612718 /* Pods-HukukChat-HukukChatTests.debug.xcconfig */,
+				7BC86DC866098B22E4832B35 /* Pods-HukukChat-HukukChatTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -158,12 +158,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "HukukChatTests" */;
 			buildPhases = (
-				B39B493DEAF261A42B0D3FB0 /* [CP] Check Pods Manifest.lock */,
+				38E8CD158610C023EBA9BFD5 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				292B234A64503B69371F0DE3 /* [CP] Embed Pods Frameworks */,
-				5C4FCE3067EEE9E8368DFE79 /* [CP] Copy Pods Resources */,
+				00BC9DD7401910CCBFE25222 /* [CP] Embed Pods Frameworks */,
+				0FAA4C23241620ACD4A38F74 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -179,13 +179,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "HukukChat" */;
 			buildPhases = (
-				698C3DA236421284193811C3 /* [CP] Check Pods Manifest.lock */,
+				7835F09312F7552D00E7F763 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				10C150890AE359F406B18063 /* [CP] Embed Pods Frameworks */,
-				9B3CF36C3832832F36DCF1FC /* [CP] Copy Pods Resources */,
+				F255064FC172B2B1605CDC6A /* [CP] Embed Pods Frameworks */,
+				BB5C6866A1AA5684F9602D55 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -253,6 +253,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		00BC9DD7401910CCBFE25222 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -269,41 +290,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		10C150890AE359F406B18063 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		292B234A64503B69371F0DE3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5C4FCE3067EEE9E8368DFE79 /* [CP] Copy Pods Resources */ = {
+		0FAA4C23241620ACD4A38F74 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -311,16 +298,42 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HukukChat-HukukChatTests/Pods-HukukChat-HukukChatTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		698C3DA236421284193811C3 /* [CP] Check Pods Manifest.lock */ = {
+		38E8CD158610C023EBA9BFD5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HukukChat-HukukChatTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7835F09312F7552D00E7F763 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -342,7 +355,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9B3CF36C3832832F36DCF1FC /* [CP] Copy Pods Resources */ = {
+		BB5C6866A1AA5684F9602D55 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -350,35 +363,38 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B39B493DEAF261A42B0D3FB0 /* [CP] Check Pods Manifest.lock */ = {
+		F255064FC172B2B1605CDC6A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-HukukChat-HukukChatTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HukukChat/Pods-HukukChat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -414,7 +430,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B714E07B4D2ABF081AB57BA /* Pods-HukukChat-HukukChatTests.debug.xcconfig */;
+			baseConfigurationReference = 4A2A0E24FA7F89A720612718 /* Pods-HukukChat-HukukChatTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -441,7 +457,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FC385130D6FEAB72E327A55E /* Pods-HukukChat-HukukChatTests.release.xcconfig */;
+			baseConfigurationReference = 7BC86DC866098B22E4832B35 /* Pods-HukukChat-HukukChatTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -465,11 +481,11 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEC7C73B7E73A5F433597293 /* Pods-HukukChat.debug.xcconfig */;
+			baseConfigurationReference = CE8A38E1E447307A84ED7D59 /* Pods-HukukChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = LJNM8V8M95;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = HukukChat/Info.plist;
@@ -477,13 +493,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evolvechat.hukukchat.one;
 				PRODUCT_NAME = HukukChat;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -493,24 +509,24 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC4B5A5F1D3790669FEF9DDE /* Pods-HukukChat.release.xcconfig */;
+			baseConfigurationReference = B5F78C1E9EE1DE520172EF19 /* Pods-HukukChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = LJNM8V8M95;
 				INFOPLIST_FILE = HukukChat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evolvechat.hukukchat.one;
 				PRODUCT_NAME = HukukChat;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
